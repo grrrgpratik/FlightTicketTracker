@@ -1,5 +1,6 @@
 import 'package:flight_ticket_tracker/CustomShapeClipper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp((MaterialApp(
     title: "Flight Tracker App",
@@ -19,6 +20,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Color(0xFFC86712)));
     return Scaffold(
       body: Column(
         children: <Widget>[HomeScreenTopContainer()],
@@ -37,6 +40,7 @@ class HomeScreenTopContainer extends StatefulWidget {
 
 class _HomeScreenTopContainerState extends State<HomeScreenTopContainer> {
   var selectedLocationIndex = 0;
+  var isFlightSelected = true;
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +110,7 @@ class _HomeScreenTopContainerState extends State<HomeScreenTopContainer> {
                   height: 50,
                 ),
                 Text(
-                  "Where would\nyou want to go ?",
+                  "Where would you\nlike to go ?",
                   style: TextStyle(fontSize: 24, color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
@@ -137,14 +141,71 @@ class _HomeScreenTopContainerState extends State<HomeScreenTopContainer> {
                     ),
                   ),
                 ),
+                SizedBox(height: 20.0),
                 Row(
-                  children: <Widget>[],
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          isFlightSelected = true;
+                        });
+                      },
+                      child: ChoiceChip(
+                          Icons.flight_takeoff, "Flights", isFlightSelected),
+                    ),
+                    SizedBox(width: 20),
+                    InkWell(
+                        onTap: () {
+                          setState(() {
+                            isFlightSelected = false;
+                          });
+                        },
+                        child: ChoiceChip(
+                            Icons.hotel, "Hotels", !isFlightSelected)),
+                  ],
                 )
               ],
             ),
           ),
         )
       ],
+    );
+  }
+}
+
+class ChoiceChip extends StatefulWidget {
+  final IconData icon;
+  final String text;
+  final bool isSelected;
+
+  ChoiceChip(this.icon, this.text, this.isSelected);
+  _ChoiceChipState createState() => _ChoiceChipState();
+}
+
+class _ChoiceChipState extends State<ChoiceChip> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+      decoration: widget.isSelected
+          ? BoxDecoration(
+              color: Colors.white.withOpacity(0.15),
+              borderRadius: BorderRadius.all(Radius.circular((20.0))))
+          : null,
+      child: Row(children: <Widget>[
+        Icon(
+          widget.icon,
+          size: 20,
+          color: Colors.white,
+        ),
+        SizedBox(width: 8),
+        Text(
+          widget.text,
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        )
+      ]),
     );
   }
 }
