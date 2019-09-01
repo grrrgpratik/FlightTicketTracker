@@ -1,3 +1,4 @@
+import 'package:flight_ticket_tracker/CustomAppBar.dart';
 import 'package:flight_ticket_tracker/CustomShapeClipper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,13 +10,13 @@ void main() => runApp((MaterialApp(
     theme: appTheme,
     home: MyApp())));
 
-Color firstColor = Color(0xFFF47D15);
-Color secondColor = Color(0xFFEF772C);
+Color firstColor = Color(0xFFF06E2A);
+Color secondColor = Color(0xFFF27423);
 
 ThemeData appTheme =
-    ThemeData(primaryColor: Color(0xFFF3791A), fontFamily: "Oxygen");
+    ThemeData(primaryColor: Color(0xFFF06E2A), fontFamily: "Oxygen");
 
-List<String> locations = ["Boston (BOS)", "New York City(NYC)"];
+List<String> locations = ["Boston (BOS)", "New York City (NYC)"];
 
 final formatCurrency = NumberFormat.simpleCurrency();
 
@@ -24,10 +25,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Color(0xFFC86712)));
+        SystemUiOverlayStyle(statusBarColor: Color(0xFFDC6A20)));
     return Scaffold(
-      body: Column(
-        children: <Widget>[HomeScreenTopContainer(), homeScreenBottomContainer],
+      resizeToAvoidBottomPadding: false,
+      bottomNavigationBar: CustomAppBar(),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: <Widget>[
+            HomeScreenTopContainer(),
+            homeScreenBottomContainer,
+            homeScreenBottomContainer
+          ],
+        ),
       ),
     );
   }
@@ -219,7 +229,7 @@ var homeScreenBottomContainer = Container(
     child: Column(
   children: <Widget>[
     Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5.0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -239,14 +249,11 @@ var homeScreenBottomContainer = Container(
         ],
       ),
     ),
-    Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Container(
-        height: 260.0,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: cityCard,
-        ),
+    Container(
+      height: 260.0,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: cityCard,
       ),
     )
   ],
@@ -276,7 +283,7 @@ class CityCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -348,7 +355,12 @@ class CityCard extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(
+            height: 4,
+          ),
           Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(
                 width: 5,
