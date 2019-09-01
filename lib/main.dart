@@ -1,5 +1,6 @@
 import 'package:flight_ticket_tracker/CustomAppBar.dart';
 import 'package:flight_ticket_tracker/CustomShapeClipper.dart';
+import 'package:flight_ticket_tracker/flight_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -146,9 +147,19 @@ class _HomeScreenTopContainerState extends State<HomeScreenTopContainer> {
                           suffixIcon: Material(
                             elevation: 2,
                             borderRadius: BorderRadius.all(Radius.circular(30)),
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.black,
+                            child: InkWell(
+                              customBorder: new CircleBorder(),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            FlightListingScreen()));
+                              },
+                              child: Icon(
+                                Icons.search,
+                                color: Colors.black,
+                              ),
                             ),
                           )),
                     ),
